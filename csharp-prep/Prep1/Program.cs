@@ -1,4 +1,5 @@
 using System;
+using System.Data.SqlTypes;
 
 class Program
 {
@@ -15,6 +16,11 @@ class Program
         string lastName = Console.ReadLine();
 
         // Print out the James Bond message :)
-        Console.WriteLine($"Your name is {lastName}, {firstName}, {lastName}");
+        // String interpolation:
+        Console.WriteLine($"Your name is {lastName}, {firstName} {lastName}");
+
+        // String formatting (common in other languages, but, not for this course)
+        // Console.WriteLine("Your name is {0}, {1} {0}", lastName, firstName);
+
     }
 }
