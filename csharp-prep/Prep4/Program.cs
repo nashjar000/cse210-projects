@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
         List<int> numbers = new List<int>();
 
-        // Prompt user for numbers
+        // Ask user for numbers
         Console.WriteLine("Enter a list of numbers, type 0 when finished.");
 
         int input;
