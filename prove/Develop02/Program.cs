@@ -48,3 +48,6 @@ class Program {
         }
     }
 }
+
+// Personal note: I could have done this a bit differently if I wanted to. From class, we added some more lines of code to this file to save the entries etc.
+// What I did instead was use the Journal class to save some of these things then I called some of the functions in the case statements.

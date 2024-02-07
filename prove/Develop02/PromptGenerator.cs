@@ -1,7 +1,8 @@
 using System;
 
 public class PromptGenerator {
-    public string[] _promptGenerator=new string[] {
+    // Worked on this in class...
+    public string[] _promptGenerator=new string[] { //Prompts to use...I can add more if I want to :)
         "Who was the most interesting person I interacted with today?",
         "What was the best part of my day?",
         "How did I see the hand of the Lord in my life today?",
@@ -21,12 +22,12 @@ public class PromptGenerator {
     }
 
     ;
-    public string _randomPrompt="";
+    public string _randomPrompt=""; // random prompt is put in an empty string
 
-    public string GenerateRandomPrompt() {
-        Random random=new Random();
-        int index=random.Next(_promptGenerator.Length);
-        return _randomPrompt=_promptGenerator[index];
+    public string GenerateRandomPrompt() { // This generates a random prompt
+        Random random=new Random(); // Create a new random prompt from the list of prompts
+        int index=random.Next(_promptGenerator.Length); // Get a random index from the list
+        return _randomPrompt=_promptGenerator[index];   // Return the random prompt
     }
 
 }
