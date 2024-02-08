@@ -25,3 +25,8 @@ public class Program
         Console.WriteLine(fraction4.GetDecimalValue()); // Decimal form
     }
 }
+
+/*
+Notes for next time: instead of spelling out "fraction1," 
+I could do "f1" instead. Makes it easier to write at least. 
+*/ 
