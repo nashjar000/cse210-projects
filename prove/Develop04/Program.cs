@@ -1,4 +1,5 @@
 using System;
+// Note: Paint the main diagram here :)
 
 class Program
 {
