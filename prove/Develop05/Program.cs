@@ -59,7 +59,8 @@ class Program
                         break;
                     // record an event
                     case 5:
-                        Console.Write("Enter the index of the goal to record an event: ");
+                        ListGoals(goals); // Display the list of goals
+                        Console.Write("\nWhich goal did you accomplish? ");
                         if (int.TryParse(Console.ReadLine(), out int goalIndex))
                         {
                             RecordEvent(goals, goalIndex);
@@ -69,7 +70,7 @@ class Program
                             Console.WriteLine("Invalid input. Please enter a valid goal index.");
                         }
                         break;
-                    // quit
+
                     case 6:
                         quit = true;
                         Console.WriteLine("Goodbye!");
@@ -107,7 +108,7 @@ static void CreateNewGoal(List<Goal> goals)
         switch (choice)
         {
             case 1:
-                Console.Write("What is the amount of points associated with this goal: ");
+                Console.Write("What is the amount of points associated with this goal? ");
                 if (int.TryParse(Console.ReadLine(), out int simpleGoalPoints))
                 {
                     goals.Add(new SimpleGoal(goalName, goalDescription, simpleGoalPoints));
@@ -119,7 +120,7 @@ static void CreateNewGoal(List<Goal> goals)
                 break;
 
             case 2:
-                Console.Write("Enter the points for each event: ");
+                Console.Write("What is the amount of points associated with this goal? ");
                 if (int.TryParse(Console.ReadLine(), out int eternalPoints))
                 {
                     goals.Add(new EternalGoal(goalName, eternalPoints, goalDescription));
