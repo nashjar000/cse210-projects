@@ -1,28 +1,32 @@
 class SimpleGoal : Goal
 {
-    private bool _completed;
+    private bool _isCompleted;
 
-    public SimpleGoal(string name, string description, int points) : base(name)
+    public SimpleGoal(string name, string description, int points) : base(name, description, points)
     {
-        _description = description;
-        _points = points;
-        _completed = false; // Simple goals start as incomplete
+        _isCompleted = false;
+    }
+
+    // Constructor with isCompleted parameter
+    public SimpleGoal(string name, string description, int points, bool isCompleted) : base(name, description, points)
+    {
+        _isCompleted = isCompleted;
     }
 
     public override void RecordEvent()
     {
-        _completed = true; // Mark the goal as completed when an event is recorded
-        Console.WriteLine($"\n{_name} completed! You earned {_points} points.");
-        Console.WriteLine($"Here's how you defined your goal: {_description}");
+        _isCompleted = true;
+        Console.WriteLine($"\n{Name} completed! You gained {Points} points.");
     }
 
     public override void DisplayProgress()
     {
-        Console.WriteLine($"[{(_completed ? 'X' : ' ')}] ({Description})");
+        Console.WriteLine($"{(_isCompleted ? "[x]" : "[ ]")} {Name}");
     }
 
+    // Implement the IsCompleted method
     public override bool IsCompleted()
     {
-        return _completed; // Return the completion status of the goal
+        return _isCompleted;
     }
 }

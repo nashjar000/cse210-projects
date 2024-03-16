@@ -169,14 +169,15 @@ static void CreateNewGoal(List<Goal> goals)
     }
 }
 
-    static void ListGoals(List<Goal> goals)
+static void ListGoals(List<Goal> goals)
+{
+    for (int i = 0; i < goals.Count; i++)
     {
-        for (int i = 0; i < goals.Count; i++)
-        {
-            var goal = goals[i];
-            Console.WriteLine($"{i + 1}. [ ] {goal.Name} ({goal.Description})");
-        }
+        var goal = goals[i];
+        string completionStatus = goal.IsCompleted() ? "x" : " ";
+        Console.WriteLine($"{i + 1}. [{completionStatus}] {goal.Name} ({goal.Description})");
     }
+}
 
    static void SaveGoals(List<Goal> goals, string fileName)
 {
@@ -238,7 +239,8 @@ static List<Goal> LoadGoals(string fileName)
 
             if (parts[0] == "SimpleGoal")
             {
-                loadedGoals.Add(new SimpleGoal(name, description, points));
+                bool isCompleted = bool.Parse(parameters[3].Trim());
+                loadedGoals.Add(new SimpleGoal(name, description, points, isCompleted));
             }
             else if (parts[0] == "EternalGoal")
             {
@@ -259,16 +261,20 @@ static List<Goal> LoadGoals(string fileName)
 }
 
 
-    static void RecordEvent(List<Goal> goals, int goalIndex)
+
+static void RecordEvent(List<Goal> goals, int goalIndex)
+{
+    // Adjust the index to match the zero-based index in the list
+    goalIndex -= 1;
+
+    if (goalIndex >= 0 && goalIndex < goals.Count)
     {
-        if (goalIndex >= 0 && goalIndex < goals.Count)
-        {
-            goals[goalIndex].RecordEvent();
-            Console.WriteLine("Event recorded for the goal: " + goals[goalIndex].Name);
-        }
-        else
-        {
-            Console.WriteLine("Invalid goal index. Please enter a valid goal index.");
-        }
+        goals[goalIndex].RecordEvent();
+        Console.WriteLine("Event recorded for the goal: " + goals[goalIndex].Name);
     }
+    else
+    {
+        Console.WriteLine("Invalid goal index. Please enter a valid goal index.");
+    }
+}
 }

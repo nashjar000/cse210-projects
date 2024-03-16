@@ -1,0 +1,2 @@
+100
+SimpleGoal: simpleGoalName, description of simple goal, 100, False
