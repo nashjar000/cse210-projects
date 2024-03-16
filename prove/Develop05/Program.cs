@@ -236,24 +236,24 @@ static (List<Goal>, int) LoadGoals(string fileName)
 
     try
     {
-        using (StreamReader reader = new StreamReader(fileName))
+        using (StreamReader reader = new StreamReader(fileName)) // Open the file for reading
         {
             // Read the total points from the first line
             if (int.TryParse(reader.ReadLine(), out loadedTotalPoints))
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                string line; // Initialize line to an empty string
+                while ((line = reader.ReadLine()) != null) // Read lines from the file
                 {
-                    string[] parts = line.Split(':');
-                    if (parts.Length == 2 && parts[0].Trim() == "ChecklistGoal")
+                    string[] parts = line.Split(':'); // Split the line by ':'
+                    if (parts.Length == 2 && parts[0].Trim() == "ChecklistGoal") // Check if the line is a checklist goal
                     {
-                        string[] parameters = parts[1].Split(',');
-                        string name = parameters[0].Trim();
-                        string description = parameters[1].Trim();
-                        int points = int.Parse(parameters[2].Trim());
-                        int targetCount = int.Parse(parameters[3].Trim());
-                        int bonus = int.Parse(parameters[4].Trim());
-                        loadedGoals.Add(new ChecklistGoal(name, description, points, targetCount, bonus));
+                        string[] parameters = parts[1].Split(','); // Split the parameters by ','
+                        string name = parameters[0].Trim(); // Trim the name and description
+                        string description = parameters[1].Trim(); // Trim the name and description
+                        int points = int.Parse(parameters[2].Trim()); // Parse the points
+                        int targetCount = int.Parse(parameters[3].Trim()); // Parse the target count
+                        int bonus = int.Parse(parameters[4].Trim()); // Parse the bonus
+                        loadedGoals.Add(new ChecklistGoal(name, description, points, targetCount, bonus)); // Add the checklist goal to the list
                     }
                 }
             }
@@ -265,7 +265,7 @@ static (List<Goal>, int) LoadGoals(string fileName)
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error loading goals from file: {ex.Message}");
+        Console.WriteLine($"Error loading goals from file: {ex.Message}"); // Display error message
     }
 
     return (loadedGoals, loadedTotalPoints); // Return both loaded goals and total points
