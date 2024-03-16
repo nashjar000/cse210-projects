@@ -1,26 +1,30 @@
-class EternalGoal : Goal
+public class EternalGoal : Goal
 {
-    public EternalGoal(string name, int points, string description) : base(name)
+    private int _pointsPerEvent;
+    private bool _isCompleted;
+
+    public EternalGoal(string name, int pointsPerEvent, string description) : base(name)
     {
-        _points = points;
+        _pointsPerEvent = pointsPerEvent;
         _description = description;
     }
 
-    // record event
     public override void RecordEvent()
     {
-        Console.WriteLine($"\n{_name} recorded! You earned {_points} points.");
-        Console.WriteLine($"Here's how you defined your goal: {_description}");
+        // Mark the goal as completed
+        _isCompleted = true;
+
+        Console.WriteLine($"{Name} completed! You earned {_pointsPerEvent} points.");
     }
+
 
     public override void DisplayProgress()
     {
-        Console.WriteLine($"[{(_points > 0 ? ' ' : 'X')}] {_name}");
+        Console.WriteLine($"{Name}: {_description}");
     }
 
     public override bool IsCompleted()
     {
-        // Eternal goals are never completed
-        return false;
+        return false; // Eternal goals are never completed
     }
 }

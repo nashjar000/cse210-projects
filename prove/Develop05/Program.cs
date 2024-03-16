@@ -175,9 +175,18 @@ static void ListGoals(List<Goal> goals)
     {
         var goal = goals[i];
         string completionStatus = goal.IsCompleted() ? "x" : " ";
-        Console.WriteLine($"{i + 1}. [{completionStatus}] {goal.Name} ({goal.Description})");
+        
+        if (goal is ChecklistGoal checklistGoal)
+        {
+            Console.WriteLine($"{i + 1}. [{completionStatus}] {checklistGoal.Name} ({checklistGoal.Description}) - Currently completed: {checklistGoal.CompletedCount}/{checklistGoal.TargetCount}");
+        }
+        else
+        {
+            Console.WriteLine($"{i + 1}. [{completionStatus}] {goal.Name} ({goal.Description})");
+        }
     }
 }
+
 
    static void SaveGoals(List<Goal> goals, string fileName)
 {

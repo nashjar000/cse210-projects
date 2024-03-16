@@ -1,2 +1,2 @@
 100
-SimpleGoal: simpleGoalName, description of simple goal, 100, False
+ChecklistGoal: temple, do at least one ordinance at the temple, 100,3,500
