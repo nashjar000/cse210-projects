@@ -1,7 +1,6 @@
 public class EternalGoal : Goal
 {
     private int _pointsPerEvent;
-    private bool _isCompleted;
 
     public EternalGoal(string name, int pointsPerEvent, string description) : base(name)
     {

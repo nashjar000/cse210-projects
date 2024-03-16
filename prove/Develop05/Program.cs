@@ -97,6 +97,7 @@ static void CreateNewGoal(List<Goal> goals)
     
     Console.Write("\nWhich type of goal would you like to create: ");
     
+    // get the user's choice
     if (int.TryParse(Console.ReadLine(), out int choice))
     {
         Console.Write("\nWhat is the name of your goal? ");
@@ -111,7 +112,7 @@ static void CreateNewGoal(List<Goal> goals)
                 Console.Write("What is the amount of points associated with this goal? ");
                 if (int.TryParse(Console.ReadLine(), out int simpleGoalPoints))
                 {
-                    goals.Add(new SimpleGoal(goalName, goalDescription, simpleGoalPoints));
+                    goals.Add(new SimpleGoal(goalName, goalDescription, simpleGoalPoints)); // Add the new goal to the list
                 }
                 else
                 {
@@ -121,9 +122,9 @@ static void CreateNewGoal(List<Goal> goals)
 
             case 2:
                 Console.Write("What is the amount of points associated with this goal? ");
-                if (int.TryParse(Console.ReadLine(), out int eternalPoints))
+                if (int.TryParse(Console.ReadLine(), out int eternalPoints)) // Add the new goal to the list
                 {
-                    goals.Add(new EternalGoal(goalName, eternalPoints, goalDescription));
+                    goals.Add(new EternalGoal(goalName, eternalPoints, goalDescription)); // Add the new goal to the list
                 }
                 else
                 {
@@ -133,15 +134,15 @@ static void CreateNewGoal(List<Goal> goals)
 
             case 3:
                 Console.Write("What is the amount of points associated with this goal? ");
-                if (int.TryParse(Console.ReadLine(), out int checklistPoints))
+                if (int.TryParse(Console.ReadLine(), out int checklistPoints)) // Add the new goal to the list
                 {
                     Console.Write("How many times does this goal need to be accomplished for a bonus? ");
-                    if (int.TryParse(Console.ReadLine(), out int checklistAccomplishCount))
+                    if (int.TryParse(Console.ReadLine(), out int checklistAccomplishCount)) // Add the new goal points to the list
                     {
                         Console.Write("What is the bonus for accomplishing it that many times? ");
-                        if (int.TryParse(Console.ReadLine(), out int checklistBonus))
+                        if (int.TryParse(Console.ReadLine(), out int checklistBonus)) // Bonus points being added
                         {
-                            goals.Add(new ChecklistGoal(goalName, goalDescription, checklistPoints, checklistAccomplishCount, checklistBonus));
+                            goals.Add(new ChecklistGoal(goalName, goalDescription, checklistPoints, checklistAccomplishCount, checklistBonus)); // adding everything
                         }
                         else
                         {
@@ -170,19 +171,22 @@ static void CreateNewGoal(List<Goal> goals)
     }
 }
 
-static void ListGoals(List<Goal> goals)
+static void ListGoals(List<Goal> goals) // Display the list of goals
 {
     for (int i = 0; i < goals.Count; i++)
     {
         var goal = goals[i];
-        string completionStatus = goal.IsCompleted() ? "x" : " ";
+        string completionStatus = goal.IsCompleted() ? "x" : " "; // Check if the goal is completed
         
+        // Check if the goal is a checklist goal
         if (goal is ChecklistGoal checklistGoal)
         {
+            // Display the checklist goal's completion status
             Console.WriteLine($"{i + 1}. [{completionStatus}] {checklistGoal.Name} ({checklistGoal.Description}) - Currently completed: {checklistGoal.CompletedCount}/{checklistGoal.TargetCount}");
         }
         else
         {
+            // Display the other goals
             Console.WriteLine($"{i + 1}. [{completionStatus}] {goal.Name} ({goal.Description})");
         }
     }
@@ -199,16 +203,20 @@ static void ListGoals(List<Goal> goals)
 
         foreach (var goal in goals)
         {
-            string goalLine = "";
-
-            if (goal is SimpleGoal simpleGoal)
+            string goalLine = ""; // Initialize goalLine to an empty string
+    
+            if (goal is SimpleGoal simpleGoal) // Check if the goal is a SimpleGoal
             {
+                // Add the name, description, and points to the goalLine
                 goalLine = $"SimpleGoal: {simpleGoal.Name}, {simpleGoal.Description}, {simpleGoal.Points}, False";
             }
+            // Add the name, description, and points to the goalLine
             else if (goal is EternalGoal eternalGoal)
             {
+                // Add the name, description, and points to the goalLine
                 goalLine = $"EternalGoal: {eternalGoal.Name}, {eternalGoal.Description}, {eternalGoal.Points}";
             }
+            // Add the name, description, and points to the goalLine
             else if (goal is ChecklistGoal checklistGoal)
             {
                 goalLine = $"ChecklistGoal: {checklistGoal.Name}, {checklistGoal.Description}, {checklistGoal.Points},{checklistGoal.TargetCount},{checklistGoal.Bonus}";
@@ -239,48 +247,48 @@ static List<Goal> LoadGoals(string fileName)
                 totalPoints = int.Parse(line); // Read total points from the first line
                 continue; // Skip to the next line
             }
+            // Parse the remaining lines
+            string[] parts = line.Split(':'); // Split the line into parts based on the ':' separator
+            string[] parameters = parts[1].Split(','); // Split the remaining parts into parameters
 
-            string[] parts = line.Split(':');
-            string[] parameters = parts[1].Split(',');
+            string name = parameters[0].Trim(); // Trim the whitespace
+            string description = parameters[1].Trim(); // Trim the whitespace
+            int points = int.Parse(parameters[2].Trim()); // Trim the whitespace
 
-            string name = parameters[0].Trim();
-            string description = parameters[1].Trim();
-            int points = int.Parse(parameters[2].Trim());
-
-            if (parts[0] == "SimpleGoal")
-            {
-                bool isCompleted = bool.Parse(parameters[3].Trim());
-                loadedGoals.Add(new SimpleGoal(name, description, points, isCompleted));
+            if (parts[0] == "SimpleGoal") // Check if the first part is "SimpleGoal"
+            { 
+                bool isCompleted = bool.Parse(parameters[3].Trim()); // Trim the whitespace
+                loadedGoals.Add(new SimpleGoal(name, description, points, isCompleted)); // Create a new SimpleGoal and add it to the list
             }
-            else if (parts[0] == "EternalGoal")
+            else if (parts[0] == "EternalGoal") // Check if the first part is "EternalGoal"
             {
-                loadedGoals.Add(new EternalGoal(name, points, description));
+                loadedGoals.Add(new EternalGoal(name, points, description)); // Create a new EternalGoal and add it to the list
             }
-            else if (parts[0] == "ChecklistGoal")
+            else if (parts[0] == "ChecklistGoal") // Check if the first part is "ChecklistGoal"
             {
-                int targetCount = int.Parse(parameters[3].Trim());
-                int bonus = int.Parse(parameters[4].Trim());
-                loadedGoals.Add(new ChecklistGoal(name, description, points, targetCount, bonus));
+                int targetCount = int.Parse(parameters[3].Trim()); // Trim the whitespace
+                int bonus = int.Parse(parameters[4].Trim()); // Trim the whitespace
+                loadedGoals.Add(new ChecklistGoal(name, description, points, targetCount, bonus)); // Create a new ChecklistGoal and add it to the list
             }
 
         }
     }
 
-    Console.WriteLine("Goals loaded successfully.");
-    return loadedGoals;
+    Console.WriteLine("Goals loaded successfully."); // Display message if goals are loaded successfully
+    return loadedGoals; // Return the list of loaded goals
 }
 
 
 
-static void RecordEvent(List<Goal> goals, int goalIndex)
+static void RecordEvent(List<Goal> goals, int goalIndex) // Record an event for a specific goal
 {
     // Adjust the index to match the zero-based index in the list
     goalIndex -= 1;
 
-    if (goalIndex >= 0 && goalIndex < goals.Count)
+    if (goalIndex >= 0 && goalIndex < goals.Count) // Check if the goal index is valid
     {
-        goals[goalIndex].RecordEvent();
-        Console.WriteLine("Event recorded for the goal: " + goals[goalIndex].Name);
+        goals[goalIndex].RecordEvent(); // Call the RecordEvent method
+        Console.WriteLine("Event recorded for the goal: " + goals[goalIndex].Name); // Display message indicating the event has been recorded
     }
     else
     {
