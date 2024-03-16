@@ -17,4 +17,10 @@ class EternalGoal : Goal
     {
         Console.WriteLine($"[{(_points > 0 ? ' ' : 'X')}] {_name}");
     }
+
+    public override bool IsCompleted()
+    {
+        // Eternal goals are never completed
+        return false;
+    }
 }

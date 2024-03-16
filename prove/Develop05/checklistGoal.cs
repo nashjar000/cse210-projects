@@ -4,12 +4,13 @@ class ChecklistGoal : Goal
     private int _completedCount;
     private int _bonus;
 
-    public ChecklistGoal(string name, int points, int targetCount, int bonus) : base(name)
+    public ChecklistGoal(string name, string description, int points, int targetCount, int bonus) : base(name)
     {
-        _description = "";
+        _description = description;
         _targetCount = targetCount;
         _bonus = bonus;
         Points = points; // Initialize the Points property in the base class
+        _completedCount = 0; // Initialize the completed count
     }
 
     // Record an event for the checklist goal
@@ -31,6 +32,11 @@ class ChecklistGoal : Goal
     public override void DisplayProgress()
     {
         Console.WriteLine($"[{_completedCount}/{_targetCount}] {Name}");
+    }
+
+    public override bool IsCompleted()
+    {
+        return _completedCount == _targetCount; // Return true if the completed count equals the target count
     }
 
     public int TargetCount

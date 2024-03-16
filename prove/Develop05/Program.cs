@@ -18,7 +18,8 @@ class Program
         while (!quit)
         {
             // display the user's points
-            Console.WriteLine($"\nYou have {goals.Sum(g => g.Points)} points.");
+            int totalPoints = goals.Where(g => g.IsCompleted()).Sum(g => g.Points);
+            Console.WriteLine($"\nYou have {totalPoints} points.");
 
             // display the menu options
             Console.WriteLine("\nMenu Options:");
@@ -87,86 +88,86 @@ class Program
         }
     }
     
-    static void CreateNewGoal(List<Goal> goals)
+static void CreateNewGoal(List<Goal> goals)
+{
+    Console.WriteLine("1. Simple Goal");
+    Console.WriteLine("2. Eternal Goal");
+    Console.WriteLine("3. Checklist Goal");
+    
+    Console.Write("\nWhich type of goal would you like to create: ");
+    
+    if (int.TryParse(Console.ReadLine(), out int choice))
     {
-        Console.WriteLine("1. Simple Goal");
-        Console.WriteLine("2. Eternal Goal");
-        Console.WriteLine("3. Checklist Goal");
-        
-        Console.Write("\nWhich type of goal would you like to create: ");
-        
-        if (int.TryParse(Console.ReadLine(), out int choice))
+        Console.Write("\nWhat is the name of your goal? ");
+        string goalName = Console.ReadLine();
+
+        Console.Write("What is a short description of it? ");
+        string goalDescription = Console.ReadLine();
+
+        switch (choice)
         {
-            Console.Write("\nWhat is the name of your goal? ");
-            string goalName = Console.ReadLine();
+            case 1:
+                Console.Write("What is the amount of points associated with this goal: ");
+                if (int.TryParse(Console.ReadLine(), out int simpleGoalPoints))
+                {
+                    goals.Add(new SimpleGoal(goalName, goalDescription, simpleGoalPoints));
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number for points.");
+                }
+                break;
 
-            Console.Write("What is a short description of it? ");
-            string goalDescription = Console.ReadLine();
+            case 2:
+                Console.Write("Enter the points for each event: ");
+                if (int.TryParse(Console.ReadLine(), out int eternalPoints))
+                {
+                    goals.Add(new EternalGoal(goalName, eternalPoints, goalDescription));
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number for points.");
+                }
+                break;
 
-            switch (choice)
-            {
-                case 1:
-                    Console.Write("What is the amount of points associated with this goal: ");
-                    if (int.TryParse(Console.ReadLine(), out int simpleGoalPoints))
+            case 3:
+                Console.Write("What is the amount of points associated with this goal? ");
+                if (int.TryParse(Console.ReadLine(), out int checklistPoints))
+                {
+                    Console.Write("How many times does this goal need to be accomplished for a bonus? ");
+                    if (int.TryParse(Console.ReadLine(), out int checklistAccomplishCount))
                     {
-                        goals.Add(new SimpleGoal(goalName, goalDescription, simpleGoalPoints));
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid number for points.");
-                    }
-                    break;
-
-                case 2:
-                    Console.Write("Enter the points for each event: ");
-                    if (int.TryParse(Console.ReadLine(), out int eternalPoints))
-                    {
-                        goals.Add(new EternalGoal(goalName, eternalPoints, goalDescription));
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid number for points.");
-                    }
-                    break;
-
-                case 3:
-                    Console.Write("What is the amount of points associated with this goal? ");
-                    if (int.TryParse(Console.ReadLine(), out int checklistPoints))
-                    {
-                        Console.Write("How many times does this goal need to be accomplished for a bonus? ");
-                        if (int.TryParse(Console.ReadLine(), out int checklistAccomplishCount))
+                        Console.Write("What is the bonus for accomplishing it that many times? ");
+                        if (int.TryParse(Console.ReadLine(), out int checklistBonus))
                         {
-                            Console.Write("What is the bonus for accomplishing it that many times? ");
-                            if (int.TryParse(Console.ReadLine(), out int checklistBonus))
-                            {
-                                goals.Add(new ChecklistGoal(goalName, checklistPoints, checklistAccomplishCount, checklistBonus));
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid input. Please enter a valid number for the bonus amount.");
-                            }
+                            goals.Add(new ChecklistGoal(goalName, goalDescription, checklistPoints, checklistAccomplishCount, checklistBonus));
                         }
                         else
                         {
-                            Console.WriteLine("Invalid input. Please enter a valid number for the checklist target count.");
+                            Console.WriteLine("Invalid input. Please enter a valid number for the bonus amount.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid input. Please enter a valid number for points.");
+                        Console.WriteLine("Invalid input. Please enter a valid number for the checklist target count.");
                     }
-                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number for points.");
+                }
+                break;
 
-                default:
-                    Console.WriteLine("Invalid choice. Please select a valid option.");
-                    break;
-            }
-        }
-        else
-        {
-            Console.WriteLine("Invalid input. Please enter a number.");
+            default:
+                Console.WriteLine("Invalid choice. Please select a valid option.");
+                break;
         }
     }
+    else
+    {
+        Console.WriteLine("Invalid input. Please enter a number.");
+    }
+}
 
     static void ListGoals(List<Goal> goals)
     {
@@ -247,8 +248,9 @@ static List<Goal> LoadGoals(string fileName)
             {
                 int targetCount = int.Parse(parameters[3].Trim());
                 int bonus = int.Parse(parameters[4].Trim());
-                loadedGoals.Add(new ChecklistGoal(name, points, targetCount, bonus));
+                loadedGoals.Add(new ChecklistGoal(name, description, points, targetCount, bonus));
             }
+
         }
     }
 

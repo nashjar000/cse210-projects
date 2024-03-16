@@ -33,5 +33,6 @@ abstract class Goal
     // Display the progress of the goal
     public abstract void DisplayProgress();
 
-    
+    // Check if the goal is completed
+    public abstract bool IsCompleted();
 }
