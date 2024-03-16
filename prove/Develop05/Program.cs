@@ -229,6 +229,7 @@ static void ListGoals(List<Goal> goals) // Display the list of goals
     Console.WriteLine("Goals saved successfully.");
 }
 
+// Note about loading goals: Something I need to work on still--> updating it so that it will import the points from the file
 static List<Goal> LoadGoals(string fileName)
 {
     List<Goal> loadedGoals = new List<Goal>();
