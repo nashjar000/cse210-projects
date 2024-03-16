@@ -1,0 +1,2 @@
+600
+ChecklistGoal: temple, do at least one ordinance at the temple, 600,3,500
