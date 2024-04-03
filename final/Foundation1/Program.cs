@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 class Program
 {
     static void Main(string[] args)
@@ -22,7 +19,7 @@ class Program
 
         foreach (Videos video in videosList)
         {
-            Console.WriteLine(video.ToString());
+            Console.WriteLine($"{video.Title} by {video.Author} is {video.LengthInSeconds} seconds long and has {video.Comments.Count} comments");
             foreach (Comments comment in video.Comments)
             {
                 Console.WriteLine($"{comment.CommenterName}: {comment.Comment}");
