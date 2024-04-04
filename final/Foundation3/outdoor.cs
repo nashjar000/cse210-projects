@@ -4,12 +4,16 @@ public class OutdoorGathering:Event
 {
     private string _weather;
     // Constructor
-    public OutdoorGathering(string title, string description, DateTime date, TimeSpan time, Address address, string weather) : base(title, description, date, time, address){
+    // information needed: title, description, date, time, address, weather : base title, description, date, time, address
+    public OutdoorGathering(string title, string description, DateTime date, TimeSpan time, Address address, string weather) : base(title, description, date, time, address)
+    {
         _weather = weather;
     }
 
     // return full details
-    public override string GetFullDetails(){
-        return $"{base.GetStandardDetails()}Event tyoe: Outdoor Gathering\nWeather: {_weather}";
+    public override string GetFullDetails()
+    {
+        DateTime timeAsDateTime = DateTime.Today.Add(Time); // // This converts time to display in 12-hour format
+        return $"Title: {Title}\nDescription: {Description}\nDate: {Date.ToShortDateString()} \nTime: {timeAsDateTime.ToString("h:mm tt")}\nAddress: {Address}\nEvent type: Outdoor Gathering\nWeather: {_weather}";
     }
 }

@@ -13,7 +13,7 @@ class Program
 
         // Create events:
         // Lecture: Title, Description, Date, Time, Address, Speaker, Capacity
-        Event lecture = new Lecture("How to Hide Ducks in your Apartment", "Come learn how to hide ducks in your apartment with a professional!", new DateTime(2024, 3, 20), new TimeSpan(10, 0, 0), address1, "The Duck", 42);
+        Event lecture = new Lecture("How to Hide Ducks in your Apartment", "Come learn how to hide ducks in your apartment with a professional duck hider!", new DateTime(2024, 3, 20), TimeSpan.FromHours(10), address1, "The Duck", 42);
         
         // Reception: Title, Description, Date, Time, Address, RSVP email
         Event reception = new Reception("Wedding Reception", "Come to Mr. & Mrs. Smith's wedding!", new DateTime(2024, 4, 15), new TimeSpan(18, 0, 0), address2, "rsvp@fakemail.com");
@@ -30,6 +30,7 @@ class Program
         // Use "hh" format specifier to display the time in 12-hour format
         Console.WriteLine(lecture.GetFullDetails());
         Console.WriteLine();
+
 
         Console.WriteLine("Reception:");
         // Use "hh" format specifier to display the time in 12-hour format
