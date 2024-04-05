@@ -6,6 +6,7 @@ class Program
         Videos video2 = new Videos("How to Learn C#", "Jim Bane", 180);
         Videos video3 = new Videos("Movie: The Movie", "Kermit the Frog", 240);
 
+        //Comments to video:
         video1.AddComment("Jake", "I love this video");
         video1.AddComment("Bob", "This video is alright");
 
